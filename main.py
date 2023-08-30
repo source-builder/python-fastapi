@@ -1,6 +1,6 @@
 from tortoise.contrib.fastapi import register_tortoise
-from source.controller.v2 import api_router as api_v2_router
 from source.controller.v1 import api_router as api_v1_router
+from source.controller.v2 import api_router as api_v2_router
 import fastapi
 import os
 from dotenv import main
