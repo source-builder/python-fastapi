@@ -6,9 +6,7 @@ import os
 from dotenv import main
 main.load_dotenv()
 
-
 app = fastapi.FastAPI()
-
 database_url = os.getenv("DATABASE_URL")
 port = int(os.getenv("PORT"))
 

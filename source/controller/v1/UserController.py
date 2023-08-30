@@ -4,7 +4,6 @@ from models import *
 
 app = APIRouter()
 
-
 @app.get("/user/{id}")
 async def getUser(id: int):
     return await User.get(id=id)
