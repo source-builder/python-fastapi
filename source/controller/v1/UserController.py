@@ -38,7 +38,7 @@ async def deleteUser(id: int):
 
 
 @app.post("/user/token")
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+async def loginForAccessToken(form_data: OAuth2PasswordRequestForm = Depends()):
     user = await User.filter(username=form_data.username).first()
     if user is None or user.password != form_data.password:
         raise HTTPException(
@@ -51,5 +51,5 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 
 @app.post("/user/protected")
-def protected_route(current_user: User = Depends(getCurrentUser)):
+def protected(current_user: User = Depends(getCurrentUser)):
     return current_user
