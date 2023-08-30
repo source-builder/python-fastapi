@@ -1,14 +1,12 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI
+from source.service.SystemService import getEnv
 from tortoise.contrib.fastapi import register_tortoise
 from source.controller.v1 import api_router as api_v1_router
 from source.controller.v2 import api_router as api_v2_router
-import os
-from dotenv import main
-main.load_dotenv()
 
 app = FastAPI()
-database_url = os.getenv("DATABASE_URL")
-port = int(os.getenv("PORT"))
+database_url = getEnv("DATABASE_URL")
+port = int(getEnv("PORT"))
 
 TORTOISE_ORM = {
     'connections': {

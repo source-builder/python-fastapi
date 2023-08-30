@@ -1,12 +1,18 @@
 from tortoise import fields
 from tortoise.models import Model
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, root_validator
 
 
 class User(Model):
     id = fields.IntField(pk=True)
-    name = fields.TextField()
+    username = fields.TextField()
+    password = fields.TextField()
 
 
 class UserModel(BaseModel):
-    name: str = Field(..., description="The name is required")
+    username: str = Field(..., description="the username is required")
+    password: str = Field(..., description="the password is required")
+
+class UserOutModel(BaseModel):
+    username: str
+    password: str = None

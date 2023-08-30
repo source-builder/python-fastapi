@@ -9,6 +9,7 @@ pip install pydantic
 pip install aerich
 pip install asyncpg
 pip install python-dotenv
+pip install pyjwt
 ```
 
 
