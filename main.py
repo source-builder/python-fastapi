@@ -1,12 +1,12 @@
+from fastapi import FastAPI, Depends, HTTPException
 from tortoise.contrib.fastapi import register_tortoise
 from source.controller.v1 import api_router as api_v1_router
 from source.controller.v2 import api_router as api_v2_router
-import fastapi
 import os
 from dotenv import main
 main.load_dotenv()
 
-app = fastapi.FastAPI()
+app = FastAPI()
 database_url = os.getenv("DATABASE_URL")
 port = int(os.getenv("PORT"))
 
@@ -33,6 +33,12 @@ register_tortoise(
 
 app.include_router(api_v1_router, prefix="/api", tags=["v1"])
 app.include_router(api_v2_router, prefix="/api", tags=["v2"])
+
+openapi_schema = app.openapi()
+openapi_schema["info"]["title"] = "API Docs"
+openapi_schema["info"]["description"] = "API Description"
+openapi_schema["info"]["version"] = "2.0"
+app.openapi_schema = openapi_schema
 
 if __name__ == "__main__":
     import uvicorn
