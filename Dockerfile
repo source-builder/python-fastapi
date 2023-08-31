@@ -10,6 +10,7 @@ RUN pip install --no-cache-dir fastapi \
     pydantic \
     aerich \
     asyncpg \
-    python-dotenv
+    python-dotenv \
+    pyjwt
 
 CMD ["python", "/app/main.py"]
