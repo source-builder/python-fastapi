@@ -25,10 +25,18 @@ async def saveUser(user: UserModel):
     return await User.create(**user.model_dump())
 
 
-@app.put("/{id}")
+@app.put("/{id}", response_model=UserOutModel)
 async def updateUser(id: int, user: UserModel):
     await User.filter(id=id).update(**user.model_dump())
     return {}
+
+
+@app.patch("/{id}", response_model=UserOutModel)
+async def modifyUser(id: int, user: UserModel):
+    u = await User.filter(username=user.username).first()
+    for key, value in user.model_dump():
+        setattr(u, key, value)
+    return u
 
 
 @app.delete("/{id}")
