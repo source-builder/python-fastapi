@@ -46,8 +46,8 @@ async def loginForAccessToken(form_data: OAuth2PasswordRequestForm = Depends()):
             detail="incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    access_token = createAccessToken(data={"sub": form_data.username})
-    return {"access_token": access_token, "token_type": "bearer"}
+    accessToken = createAccessToken(data={"sub": form_data.username})
+    return {"accessToken": accessToken, "tokenType": "bearer"}
 
 
 @app.post("/info")
