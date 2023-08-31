@@ -1,7 +1,8 @@
 from fastapi import Query
+from pydantic import BaseModel, Field
 from tortoise import fields
 from tortoise.models import Model
-from pydantic import BaseModel, Field
+
 from source.utils.Paging import PageQuery, getPage
 
 
@@ -9,6 +10,8 @@ class User(Model):
     id = fields.IntField(pk=True)
     username = fields.TextField()
     password = fields.TextField()
+    createdAt = fields.DatetimeField(auto_now_add=True)
+    updatedAt = fields.DatetimeField(auto_now=True)
 
 
 class UserModel(BaseModel):
@@ -31,7 +34,7 @@ class UserPageQuery(PageQuery):
 
 
 def getUserQueryPage(
-    username: str =  Query('', description="username"),
+    username: str = Query('', description="username"),
     pageNum: int = Query(1, description="Page number"),
     pageSize: int = Query(10, description="Items per page"),
 ):
