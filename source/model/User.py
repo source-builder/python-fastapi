@@ -34,9 +34,9 @@ class UserPageQuery(PageQuery):
 
 
 def getUserQueryPage(
-    username: str = Query('', description="username"),
-    pageNum: int = Query(1, description="Page number"),
-    pageSize: int = Query(10, description="Items per page"),
+    username: str = Query('', description="parameter username"),
+    pageNum: int = Query(1, description="page number"),
+    pageSize: int = Query(10, description="items per page"),
 ):
     page = getPage(pageNum, pageSize)
     return UserPageQuery(offset=page['offset'], limit=page['limit'], username=username)
