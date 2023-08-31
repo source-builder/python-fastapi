@@ -1,3 +1,4 @@
+import logging
 from fastapi import FastAPI
 from source.service.SystemService import getEnv
 from tortoise.contrib.fastapi import register_tortoise
@@ -37,6 +38,8 @@ openapi_schema["info"]["title"] = "API Docs"
 openapi_schema["info"]["description"] = "API Description"
 openapi_schema["info"]["version"] = "2.0"
 app.openapi_schema = openapi_schema
+
+logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == "__main__":
     import uvicorn

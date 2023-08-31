@@ -33,17 +33,14 @@ async def updateUser(id: int, user: UserModel):
 
 @app.patch("/{id}", response_model=UserOutModel)
 async def modifyUser(id: int, user: UserInModel):
-    u = await User.filter(username=user.username).first()
-    if u is not None:
+    u = await User.get(id=id)
+    if u.username != user.username:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="username cannot be modified")
 
-    u = await User.get(id=id)
     objs = user.model_dump(exclude={"username"})
-    for key in objs:
-        setattr(u, key, objs[key])
-    await User.filter(id=id).select_for_update(u)
-    return u
+    await User.filter(id=id).update(**objs)
+    return await User.get(id=id)
 
 
 @app.delete("/{id}")
