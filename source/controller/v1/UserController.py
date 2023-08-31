@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from source.service.UserService import *
+from source.utils.Paging import *
 from models import *
 
 app = APIRouter(prefix='/user', tags=["v1/user"])
@@ -14,6 +15,18 @@ async def getUser(id: int):
 @app.get("", response_model=list[UserOutModel])
 async def getUserList():
     return await User.all().values("username")
+
+
+@app.post("/page")
+async def getUserPageList(pageQuery: UserPageQuery = Depends(getUserQueryPage)):
+    offset = pageQuery.offset
+    limit = pageQuery.limit
+    res = []
+    if pageQuery.username is not '':
+        res = await User.filter(username__icontains=pageQuery.username).offset(offset).limit(limit)
+    else:
+        res = await User.all().offset(offset).limit(limit)
+    return res
 
 
 @app.post("", response_model=UserOutModel)
