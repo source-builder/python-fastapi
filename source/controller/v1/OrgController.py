@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-app = APIRouter(prefix="/user",tags=["v2/user"])
+app = APIRouter(prefix="/org", tags=["v1/org"])
+
 
 @app.get("")
-def getUser():
-
+def getOrg():
     return [{"item": "item_a"}, {"item": "item_b"}]

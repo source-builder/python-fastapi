@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from source.service.UserService import *
 from models import *
 
-app = APIRouter(prefix='/user')
+app = APIRouter(prefix='/user', tags=["v1/user"])
 
 
 @app.get("/{id}", response_model=UserOutModel)

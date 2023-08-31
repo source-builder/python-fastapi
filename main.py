@@ -29,8 +29,8 @@ register_tortoise(
     add_exception_handlers=True,
 )
 
-app.include_router(api_v1_router, prefix="/api", tags=["v1"])
-app.include_router(api_v2_router, prefix="/api", tags=["v2"])
+app.include_router(api_v1_router, prefix="/api")
+app.include_router(api_v2_router, prefix="/api")
 
 openapi_schema = app.openapi()
 openapi_schema["info"]["title"] = "API Docs"
