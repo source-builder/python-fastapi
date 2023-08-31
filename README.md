@@ -32,10 +32,6 @@ python main.py
 
 
 ### deploy
-**change the .env file database connect string to the docker service name:** 
-
-*postgresql://username:password@{serviceName}:port/database*
-
 ```
 docker-compose up -d
 ```
