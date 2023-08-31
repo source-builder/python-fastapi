@@ -50,18 +50,18 @@ async def deleteUser(id: int):
 
 
 @app.post("/token")
-async def loginForAccessToken(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = await User.filter(username=form_data.username).first()
-    if user is None or user.password != form_data.password:
+async def loginForAccessToken(data: OAuth2PasswordRequestForm = Depends()):
+    user = await User.filter(username=data.username).first()
+    if user is None or user.password != data.password:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    accessToken = createAccessToken(data={"sub": form_data.username})
+    accessToken = createAccessToken(data={"sub": data.username})
     return {"accessToken": accessToken, "tokenType": "bearer"}
 
 
 @app.post("/info")
-def userInfo(current_user: User = Depends(getCurrentUser)):
-    return current_user
+def userInfo(currentUser: User = Depends(getCurrentUser)):
+    return currentUser
