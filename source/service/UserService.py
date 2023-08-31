@@ -7,6 +7,7 @@ from models import *
 
 secret_key = getEnv("SECRET_KEY")
 
+
 def createAccessToken(data: dict, expires_delta: timedelta = timedelta(hours=24)):
     to_encode = data.copy()
     expire = datetime.utcnow() + expires_delta
@@ -20,6 +21,7 @@ async def getCurrentUser(token: str = Depends(OAuth2PasswordBearer(tokenUrl="tok
         payload = jwt.decode(token, secret_key, algorithms=['HS256'])
         username = payload.get('sub')
         user = await User.filter(username=username).first()
+        user.password = None
         return user
     except jwt.ExpiredSignatureError:
         raise HTTPException(

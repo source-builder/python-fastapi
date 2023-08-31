@@ -11,6 +11,7 @@ RUN pip install --no-cache-dir fastapi \
     aerich \
     asyncpg \
     python-dotenv \
-    pyjwt
+    pyjwt \
+    python-multipart
 
 CMD ["python", "/app/main.py"]
