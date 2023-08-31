@@ -17,7 +17,7 @@ async def getUserList():
     return await User.all().values("username")
 
 
-@app.post("/page")
+@app.post("/page", response_model=list[UserOutModel])
 async def getUserPageList(pageQuery: UserPageQuery = Depends(getUserQueryPage)):
     offset = pageQuery.offset
     limit = pageQuery.limit
