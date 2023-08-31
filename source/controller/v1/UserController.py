@@ -17,18 +17,6 @@ async def getUserList():
     return await User.all().values("username")
 
 
-@app.post("/page", response_model=list[UserOutModel])
-async def getUserPageList(pageQuery: UserPageQuery = Depends(getUserQueryPage)):
-    offset = pageQuery.offset
-    limit = pageQuery.limit
-    res = []
-    if pageQuery.username is not '':
-        res = await User.filter(username__icontains=pageQuery.username).offset(offset).limit(limit)
-    else:
-        res = await User.all().offset(offset).limit(limit)
-    return res
-
-
 @app.post("", response_model=UserOutModel)
 async def saveUser(user: UserModel):
     u = await User.filter(username=user.username).first()
@@ -60,6 +48,18 @@ async def modifyUser(id: int, user: UserInModel):
 async def deleteUser(id: int):
     await User.filter(id=id).delete()
     return {}
+
+
+@app.post("/page", response_model=list[UserOutModel])
+async def getUserPageList(pageQuery: UserPageQuery = Depends(getUserQueryPage)):
+    offset = pageQuery.offset
+    limit = pageQuery.limit
+    res = []
+    if pageQuery.username is not '':
+        res = await User.filter(username__icontains=pageQuery.username).offset(offset).limit(limit)
+    else:
+        res = await User.all().offset(offset).limit(limit)
+    return res
 
 
 @app.post("/token")
