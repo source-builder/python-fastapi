@@ -33,7 +33,7 @@ async def updateUser(id: int, user: UserModel):
 
 @app.patch("/{id}", response_model=UserOutModel)
 async def modifyUser(id: int, user: UserModel):
-    u = await User.filter(username=user.username).first()
+    u = await User.get(id=id)
     for key, value in user.model_dump():
         setattr(u, key, value)
     return u
