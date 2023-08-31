@@ -28,7 +28,7 @@ async def saveUser(user: UserModel):
 @app.put("/{id}", response_model=UserOutModel)
 async def updateUser(id: int, user: UserModel):
     await User.filter(id=id).update(**user.model_dump())
-    return {}
+    return user
 
 
 @app.patch("/{id}", response_model=UserOutModel)
